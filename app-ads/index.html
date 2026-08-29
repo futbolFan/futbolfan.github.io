@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="docTitle">AntoTech - Apps y Herramientas Móviles</title>
+  <meta name="description" content="Bienvenido a la página oficial de AntoTech. Explora nuestra amplia selección de aplicaciones móviles para Android.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #01875f;
+      --primary-hover: #016c4c;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-main: #202124;
+      --text-muted: #5f6368;
+      --border-color: #e0e0e0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    header {
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
+    /* Selector de Idioma */
+    .language-selector {
+      position: relative;
+      display: inline-block;
+    }
+
+    .language-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: var(--text-main);
+      font-family: inherit;
+      transition: all 0.2s;
+      min-height: 40px;
+    }
+
+    .language-btn:hover {
+      background-color: var(--bg-color);
+      border-color: var(--primary-color);
+    }
+
+    .language-btn .globe-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .language-btn .arrow-icon {
+      font-size: 0.6rem;
+      transition: transform 0.2s;
+      margin-left: 0.2rem;
+    }
+
+    .language-btn.open .arrow-icon {
+      transform: rotate(180deg);
+    }
+
+    .language-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      min-width: 200px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 200;
+      padding: 0.5rem 0;
+    }
+
+    .language-dropdown.open {
+      display: block;
+    }
+
+    .language-dropdown .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .language-dropdown .lang-option:hover {
+      background-color: var(--bg-color);
+    }
+
+    .language-dropdown .lang-option.active {
+      background-color: #e8f5e9;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .language-dropdown .lang-option .flag {
+      font-size: 1.2rem;
+      width: 28px;
+      text-align: center;
+    }
+
+    .language-dropdown .lang-option .lang-code {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      font-weight: 400;
+    }
+
+    .language-dropdown .lang-option.active .lang-code {
+      color: var(--primary-color);
+    }
+
+    /* Hero Banner */
+    .hero {
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+      padding: 4rem 1.5rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(1, 135, 95, 0.85) 0%, rgba(0, 77, 64, 0.9) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+      font-weight: 300;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+    }
+
+    /* Grid de Apps */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .app-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .app-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      flex-shrink: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .app-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.3;
+    }
+
+    /* Botón Ver Más */
+    .view-more-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 2.5rem;
+    }
+
+    .btn-view-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(1, 135, 95, 0.35);
+    }
+
+    .btn-view-more:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(1, 135, 95, 0.45);
+    }
+
+    .btn-view-more .arrow-right {
+      font-size: 1.1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-view-more:hover .arrow-right {
+      transform: translateX(4px);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #ffffff;
+      border-top: 1px solid var(--border-color);
+      padding: 2.5rem 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .footer-info {
+      max-width: 400px;
+    }
+
+    .footer-info h3 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 3rem;
+    }
+
+    .footer-column h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-column a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .footer-column a:hover {
+      color: var(--primary-color);
+    }
+
+    .copyright {
+      max-width: 1200px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 300px;
+        padding: 3rem 1.5rem;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .apps-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.85rem;
+      }
+      .app-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+      }
+      .app-name {
+        font-size: 0.8rem;
+      }
+      .header-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+      .header-right {
+        justify-content: space-between;
+      }
+      .btn-view-more {
+        padding: 0.7rem 1.8rem;
+        font-size: 0.9rem;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo">AntoTech</a>
+      <div class="header-right">
+        <nav>
+          <a href="#apps" id="navApps">Aplicaciones</a>
+          <a href="#soporte" id="navSupport">Soporte</a>
+          <a href="#contacto" id="navContact">Contacto</a>
+        </nav>
+
+        <div class="language-selector" id="languageSelector">
+          <button class="language-btn" id="languageBtn" aria-label="Seleccionar idioma" aria-expanded="false">
+            <span class="globe-icon">🌐</span>
+            <span id="currentLangLabel">Español</span>
+            <span class="arrow-icon">▼</span>
+          </button>
+          <div class="language-dropdown" id="languageDropdown" role="menu">
+            <button class="lang-option active" data-lang="es" role="menuitem">
+              <span class="flag">🇪🇸</span> Español <span class="lang-code">ES</span>
+            </button>
+            <button class="lang-option" data-lang="en" role="menuitem">
+              <span class="flag">🇺🇸</span> English <span class="lang-code">EN</span>
+            </button>
+            <button class="lang-option" data-lang="pt" role="menuitem">
+              <span class="flag">🇧🇷</span> Português <span class="lang-code">PT</span>
+            </button>
+            <button class="lang-option" data-lang="fr" role="menuitem">
+              <span class="flag">🇫🇷</span> Français <span class="lang-code">FR</span>
+            </button>
+            <button class="lang-option" data-lang="de" role="menuitem">
+              <span class="flag">🇩🇪</span> Deutsch <span class="lang-code">DE</span>
+            </button>
+            <button class="lang-option" data-lang="it" role="menuitem">
+              <span class="flag">🇮🇹</span> Italiano <span class="lang-code">IT</span>
+            </button>
+            <button class="lang-option" data-lang="ja" role="menuitem">
+              <span class="flag">🇯🇵</span> 日本語 <span class="lang-code">JA</span>
+            </button>
+            <button class="lang-option" data-lang="zh" role="menuitem">
+              <span class="flag">🇨🇳</span> 中文 <span class="lang-code">ZH</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <img class="hero-bg" src="https://play-lh.googleusercontent.com/-44ADo86QKqLDYFbxlNDk4MlOF4eaZ0MQwHL9A8bqIPOqoN3uun2Q1XnPGLQ3MLLbuVz=w3840-h2160-rw" alt="Banner AntoTech" loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 id="heroTitle">AntoTech</h1>
+      <p id="heroDesc">Bienvenido a nuestra página de apps móviles. Encontrarás una amplia selección de aplicaciones útiles, herramientas avanzadas y utilidades para todos los gustos y necesidades.</p>
+    </div>
+  </section>
+
+  <main>
+    <section id="apps">
+      <h2 class="section-title" id="sectionTitle">Más de AntoTech</h2>
+      
+      <div class="apps-grid">
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.civilcalc" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/KeuFt1WX11rtHBzicCF0jAWJRWa9UpLF6jnimPtGq930mambBo0O-U2HsoIvLGFlDOHNagmyNkXTaRWTEB0zLg=s256-rw" alt="CivilCalc icon" loading="lazy"></div>
+          <div class="app-name">CivilCalc</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.cuotasimple" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/_TcsWrXwcV57dv4pRaFsw7RnLEEhnFY7JWU06OtyBWMM_7gETo7f0kTbQBsLtDGZh7TWm9cIbbWNwHKxuYzgcw=s256-rw" alt="CuotaSimple icon" loading="lazy"></div>
+          <div class="app-name">CuotaSimple</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.tubetrack" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/WukfsqYXfpYf4HZgEtdl2CL7mIBhS_aWrkmV55ul4SpYlRo7q5PPefwSgN-nXuMtblOhsZuehVPByruILpoG5rA=s256-rw" alt="LiveSubs Connect icon" loading="lazy"></div>
+          <div class="app-name">LiveSubs Connect</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.bicimind" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/rKP4yDC39cp1oOXmABMbGr7f-j_Hi5b5p5UN9o2Qplep_TUY_wPWij07bBSbrQPvJC5dZgzmR0drfBeNjSqgJQ=s256-rw" alt="BiciRuta icon" loading="lazy"></div>
+          <div class="app-name">BiciRuta</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.hashcalc" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/M1oUzxMedaA5IugkpVwMpUmvTl1lgdbFBATZmgQ6FDc6IjpGozip7RAIwUxW3A9yl_oZ5jUqvpPnGz3X2G9hKmc=s256-rw" alt="HashCalc icon" loading="lazy"></div>
+          <div class="app-name">HashCalc</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.ipsubnetcalc" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/t0PmOshPeCctuzakZcjZPWZhqKIXaKFCBU3nZHJTLtz9R5rD1baQBrQyYJE9Ejo-UCMDnHkjkiP1AGrJosj3Aw=s256-rw" alt="SubnetCalc icon" loading="lazy"></div>
+          <div class="app-name">SubnetCalc: IPv4 & IPv6</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.timercalc" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/EUhnpDm9JE2WL9xr9OJvhnL2xrDluaIzunqSAofGPRYh_lpLgHxBP6j5xBgXOdom91sYglscqq3hiuF3BgUJ=s256-rw" alt="555 Timer Calc icon" loading="lazy"></div>
+          <div class="app-name">555 Timer Calc</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.logicgate" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/bPzy4D_kUsswMKQaSYTR8qeqBjA1znvXrJOMtr761PntVF7IVNZjWXub5PFKF5_hukLrwrtZGQX55rcyvc-l=s256-rw" alt="Logic Gate Lab icon" loading="lazy"></div>
+          <div class="app-name">Logic Gate Lab</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.resistcalc" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/aRN5B8FOGwN8j9djNDfMvLkfuQq3v27gjOP0lkAmHpjMD4EC_NAwkoFYoIU5tJj7iCSSQnd62sV6rXNSkHtcLEw=s256-rw" alt="Resistor Calculator icon" loading="lazy"></div>
+          <div class="app-name">Resistor Calculator</div>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.antotech.walink" target="_blank" rel="noopener" class="app-card">
+          <div class="app-icon"><img src="https://play-lh.googleusercontent.com/m9qCvI9yfU0_5-iD31nCCx1SiZUxD3d1M_p49as3jReLIjJYV_QyAhxnMFSvEuUNvDn5CqkU920u371_fvnCEw=s256-rw" alt="Whats Link icon" loading="lazy"></div>
+          <div class="app-name">Whats Link</div>
+        </a>
+      </div>
+
+      <div class="view-more-wrapper">
+        <a href="https://play.google.com/store/apps/dev?id=7624410493412404374" target="_blank" rel="noopener" class="btn-view-more">
+          <span class="icon-more">📱</span>
+          <span id="btnViewMoreText">Ver todas las apps en Google Play</span>
+          <span class="arrow-right">→</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-info">
+        <h3 id="footerTitle">AntoTech</h3>
+        <p id="footerDesc">Desarrollo de aplicaciones móviles útiles, eficientes y seguras para usuarios de todo el mundo.</p>
+      </div>
+
+      <div class="footer-links" id="soporte">
+        <div class="footer-column">
+          <h4 id="footerAppsTitle">Nuestras Apps</h4>
+          <ul>
+            <li><a href="https://play.google.com/store/apps/dev?id=7624410493412404374" target="_blank" rel="noopener" id="footerViewAll">Ver todo en Google Play</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column" id="contacto">
+          <h4 id="footerLegalTitle">Legal & Soporte</h4>
+          <ul>
+            <li><a href="app-ads.txt" target="_blank" id="footerFile">Archivo app-ads.txt</a></li>
+            <li><a href="mailto:soporte@antotech.com" id="footerContact">Contacto de soporte</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      &copy; 2026 AntoTech. <span id="footerCopyright">Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const btn = document.getElementById('languageBtn');
+      const dropdown = document.getElementById('languageDropdown');
+      const currentLabel = document.getElementById('currentLangLabel');
+      const options = dropdown.querySelectorAll('.lang-option');
+
+      const translations = {
+        es: {
+          title: 'AntoTech - Apps y Herramientas Móviles',
+          heroTitle: 'AntoTech',
+          heroDesc: 'Bienvenido a nuestra página de apps móviles. Encontrarás una amplia selección de aplicaciones útiles, herramientas avanzadas y utilidades para todos los gustos y necesidades.',
+          sectionTitle: 'Más de AntoTech',
+          navApps: 'Aplicaciones',
+          navSupport: 'Soporte',
+          navContact: 'Contacto',
+          btnViewMore: 'Ver todas las apps en Google Play',
+          footerTitle: 'AntoTech',
+          footerDesc: 'Desarrollo de aplicaciones móviles útiles, eficientes y seguras para usuarios de todo el mundo.',
+          footerApps: 'Nuestras Apps',
+          footerLegal: 'Legal & Soporte',
+          footerViewAll: 'Ver todo en Google Play',
+          footerFile: 'Archivo app-ads.txt',
+          footerContact: 'Contacto de soporte',
+          footerCopyright: 'Todos los derechos reservados.',
+          langLabel: 'Español'
+        },
+        en: {
+          title: 'AntoTech - Apps & Mobile Tools',
+          heroTitle: 'AntoTech',
+          heroDesc: 'Welcome to our mobile apps page. You will find a wide selection of useful applications, advanced tools and utilities for all tastes and needs.',
+          sectionTitle: 'More from AntoTech',
+          navApps: 'Apps',
+          navSupport: 'Support',
+          navContact: 'Contact',
+          btnViewMore: 'View all apps on Google Play',
+          footerTitle: 'AntoTech',
+          footerDesc: 'Development of useful, efficient and secure mobile applications for users worldwide.',
+          footerApps: 'Our Apps',
+          footerLegal: 'Legal & Support',
+          footerViewAll: 'View all on Google Play',
+          footerFile: 'app-ads.txt file',
+          footerContact: 'Support contact',
+          footerCopyright: 'All rights reserved.',
+          langLabel: 'English'
+        },
+        pt: {
+          title: 'AntoTech - Apps e Ferramentas Móveis',
+          heroTitle: 'AntoTech',
+          heroDesc: 'Bem-vindo à nossa página de aplicativos móveis. Você encontrará uma ampla seleção de aplicativos úteis, ferramentas avançadas e utilidades para todos os gostos e necessidades.',
+          sectionTitle: 'Mais da AntoTech',
+          navApps: 'Aplicativos',
+          navSupport: 'Suporte',
+          navContact: 'Contato',
+          btnViewMore: 'Ver todos os apps no Google Play',
+          footerTitle: 'AntoTech',
+          footerDesc: 'Desenvolvimento de aplicativos móveis úteis, eficientes e seguros para usuários em todo o mundo.',
+          footerApps: 'Nossos Apps',
+          footerLegal: 'Legal & Suporte',
+          footerViewAll: 'Ver tudo no Google Play',
+          footerFile: 'Arquivo app-ads.txt',
+          footerContact: 'Contato de suporte',
+          footerCopyright: 'Todos os direitos reservados.',
+          langLabel: 'Português'
+        },
+        fr: {
+          title: 'AntoTech - Applications et Outils Mobiles',
+          heroTitle: 'AntoTech',
+          heroDesc: 'Bienvenue sur notre page d\'applications mobiles. Vous trouverez une large sélection d\'applications utiles, d\'outils avancés et d\'utilitaires pour tous les goûts et besoins.',
+          sectionTitle: 'Plus d\'AntoTech',
+          navApps: 'Applications',
+          navSupport: 'Assistance',
+          navContact: 'Contact',
+          btnViewMore: 'Voir toutes les apps sur Google Play',
+          footerTitle: 'AntoTech',
+          footerDesc: 'Développement d\'applications mobiles utiles, efficaces et sécurisées pour les utilisateurs du monde entier.',
+          footerApps: 'Nos Apps',
+          footerLegal: 'Juridique & Assistance',
+          footerViewAll: 'Voir tout sur Google Play',
+          footerFile: 'Fichier app-ads.txt',
+          footerContact: 'Contact support',
+          footerCopyright: 'Tous droits réservés.',
+          langLabel: 'Français'
+        },
+        de: {
+          title: 'AntoTech - Apps und Mobile Tools',
+          heroTitle: 'AntoTech',
+          heroDesc: 'Willkommen auf unserer Mobile-Apps-Seite. Sie finden eine große Auswahl an nützlichen Anwendungen, fortschrittlichen Tools und Dienstprogrammen für jeden Geschmack und jedes Bedürfnis.',
+          sectionTitle: 'Mehr von AntoTech',
+          navApps: 'Apps',
+          navSupport: 'Support',
+          navContact: 'Kontakt',
+          btnViewMore: 'Alle Apps auf Google Play anzeigen',
+          footerTitle: 'AntoTech',
+          footerDesc: 'Entwicklung nützlicher, effizienter und sicherer mobiler Anwendungen für Benutzer weltweit.',
+          footerApps: 'Unsere Apps',
+          footerLegal: 'Rechtliches & Support',
+          footerViewAll: 'Alle auf Google Play ansehen',
+          footerFile: 'app-ads.txt Datei',
+          footerContact: 'Support-Kontakt',
+          footerCopyright: 'Alle Rechte vorbehalten.',
+          langLabel: 'Deutsch'
+        },
+        it: {
+          title: 'AntoTech - App e Strumenti Mobili',
+          heroTitle: 'AntoTech',
+          heroDesc: 'Benvenuto nella nostra pagina delle app mobili. Troverai un\'ampia selezione di applicazioni utili, strumenti avanzati e utilità per tutti i gusti e le esigenze.',
+          sectionTitle: 'Altro da AntoTech',
+          navApps: 'App',
+          navSupport: 'Supporto',
+          navContact: 'Contatto',
+          btnViewMore: 'Vedi tutte le app su Google Play',
+          footerTitle: 'AntoTech',
+          footerDesc: 'Sviluppo di applicazioni mobili utili, efficienti e sicure per utenti in tutto il mondo.',
+          footerApps: 'Le Nostre App',
+          footerLegal: 'Legale & Supporto',
+          footerViewAll: 'Vedi tutto su Google Play',
+          footerFile: 'File app-ads.txt',
+          footerContact: 'Contatto supporto',
+          footerCopyright: 'Tutti i diritti riservati.',
+          langLabel: 'Italiano'
+        },
+        ja: {
+          title: 'AntoTech - アプリとモバイルツール',
+          heroTitle: 'AntoTech',
+          heroDesc: 'モバイルアプリページへようこそ。あらゆるニーズに対応する便利なアプリケーション、高度なツール、ユーティリティの幅広いセレクションをご覧いただけます。',
+          sectionTitle: 'AntoTechのその他のアプリ',
+          navApps: 'アプリ',
+          navSupport: 'サポート',
+          navContact: 'お問い合わせ',
+          btnViewMore: 'Google Playですべてのアプリを見る',
+          footerTitle: 'AntoTech',
+          footerDesc: '世界中のユーザー向けに、便利で効率的かつ安全なモバイルアプリケーションを開発しています。',
+          footerApps: 'アプリ一覧',
+          footerLegal: '法的情報とサポート',
+          footerViewAll: 'Google Playですべて見る',
+          footerFile: 'app-ads.txt ファイル',
+          footerContact: 'サポートへのお問い合わせ',
+          footerCopyright: 'All rights reserved.',
+          langLabel: '日本語'
+        },
+        zh: {
+          title: 'AntoTech - 移动应用与工具',
+          heroTitle: 'AntoTech',
+          heroDesc: '欢迎来到我们的移动应用页面。您将找到丰富的高效应用程序、高级工具和实用程序，满足各种需求。',
+          sectionTitle: '更多 AntoTech 应用',
+          navApps: '应用',
+          navSupport: '支持',
+          navContact: '联系',
+          btnViewMore: '在 Google Play 上查看所有应用',
+          footerTitle: 'AntoTech',
+          footerDesc: '为全球用户开发实用、高效且安全的移动应用程序。',
+          footerApps: '我们的应用',
+          footerLegal: '法律与支持',
+          footerViewAll: '在 Google Play 上查看全部',
+          footerFile: 'app-ads.txt 文件',
+          footerContact: '支持联系方式',
+          footerCopyright: '保留所有权利。',
+          langLabel: '中文'
+        }
+      };
+
+      function updateLanguage(lang) {
+        const t = translations[lang] || translations.es;
+
+        document.getElementById('docTitle').textContent = t.title;
+        document.getElementById('heroTitle').textContent = t.heroTitle;
+        document.getElementById('heroDesc').textContent = t.heroDesc;
+        document.getElementById('sectionTitle').textContent = t.sectionTitle;
+        document.getElementById('navApps').textContent = t.navApps;
+        document.getElementById('navSupport').textContent = t.navSupport;
+        document.getElementById('navContact').textContent = t.navContact;
+        document.getElementById('btnViewMoreText').textContent = t.btnViewMore;
+        document.getElementById('footerTitle').textContent = t.footerTitle;
+        document.getElementById('footerDesc').textContent = t.footerDesc;
+        document.getElementById('footerAppsTitle').textContent = t.footerApps;
+        document.getElementById('footerLegalTitle').textContent = t.footerLegal;
+        document.getElementById('footerViewAll').textContent = t.footerViewAll;
+        document.getElementById('footerFile').textContent = t.footerFile;
+        document.getElementById('footerContact').textContent = t.footerContact;
+        document.getElementById('footerCopyright').textContent = t.footerCopyright;
+
+        currentLabel.textContent = t.langLabel;
+        document.documentElement.lang = lang;
+
+        options.forEach(opt => {
+          opt.classList.toggle('active', opt.getAttribute('data-lang') === lang);
+        });
+
+        localStorage.setItem('antotech_lang', lang);
+      }
+
+      // Abrir/Cerrar Dropdown
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('open');
+        btn.classList.toggle('open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+      });
+
+      // Selección de opción
+      options.forEach(opt => {
+        opt.addEventListener('click', function() {
+          const selectedLang = this.getAttribute('data-lang');
+          updateLanguage(selectedLang);
+          dropdown.classList.remove('open');
+          btn.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      // Clic fuera para cerrar
+      document.addEventListener('click', function() {
+        dropdown.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+
+      // Inicialización
+      const savedLang = localStorage.getItem('antotech_lang') || 'es';
+      updateLanguage(savedLang);
+    })();
+  </script>
+</body>
+</html>
